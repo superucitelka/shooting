@@ -3,7 +3,13 @@
 
 /*******************************************************************************************/
 /* Konstanta odkazující na element plátna */
+const canvas = document.getElementById('canvas');
 /* Konstanta obsahující grafický kontext */
+const ctx = canvas.getContext('2d');
+
+/* Test platna */
+ctx.fillStyle = 'red';
+ctx.fillRect(0, 0, 200, 200);
 
 /*******************************************************************************************/
 /* target - objekt terče */
