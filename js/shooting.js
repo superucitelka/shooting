@@ -3,7 +3,9 @@
 
 /*******************************************************************************************/
 /* Konstanta odkazující na element plátna */
+const canvas = document.getElementById('canvas');
 /* Konstanta obsahující grafický kontext */
+const ctx = canvas.getContext('2d');
 
 /*******************************************************************************************/
 /* target - objekt terče */
