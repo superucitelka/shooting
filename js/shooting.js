@@ -161,13 +161,36 @@ let game = {
 
 /*******************************************************************************************/
 /* Ošetření události stisknutí klávesy v okně stránky */
+document.addEventListener('keydown', function(event){
     // Je-li právě nějaký hráč aktivní, proběhne reakce na stisknutou klávesu 
+    if (game.activePlayer) {
         // V případě, že v události odchycený kód klávesy odpovídá:
-            // * šipka nahoru: posun kříže záporným směrem v ose y
-            // * šipka dolů: posun kříže kladným směrem v ose y
-            // * šipka doleva: posun kříže záporným směrem v ose x
-            // * šipka doprava: posun kříže kladným směrem v ose x
-            // * mezerník: symbolický výstřel - výpočet umístění rány, uložení do statistiky hráče, nastavení kříže do počáteční polohy
+        switch (event.code) {
+            // šipka nahoru: posun kříže záporným směrem v ose y
+            case 'ArrowUp': cross.y -= cross.sensitivity;
+                break;
+            // šipka dolů: posun kříže kladným směrem v ose y
+            case 'ArrowDown': cross.y += cross.sensitivity;
+                break;
+            // šipka doleva: posun kříže záporným směrem v ose x
+            case 'ArrowLeft': cross.x -= cross.sensitivity;
+                break;
+            // šipka doprava: posun kříže kladným směrem v ose x
+            case 'ArrowRight': cross.x += cross.sensitivity;
+                break;
+            // mezerník: symbolický výstřel - výpočet umístění rány, uložení do statistiky hráče, nastavení kříže do počáteční polohy
+            case 'Space': 
+                let a = Math.abs(cross.x - canvas.width / 2);
+                let b = Math.abs(cross.y - canvas.height / 2);
+                var result = target.circles - Math.pow(a ** 2 + b ** 2, 1/2) / target.gap;                     
+                game.activePlayer.shots.push({x: cross.x, y: cross.y, result: result});
+                cross.init();     
+                break;        
+        }
+        // Test 
+        console.log(game.activePlayer);
+    }
+});
 
 /*******************************************************************************************/
 /* Ošetření události kliknutí na tlačítko Nová hra */
