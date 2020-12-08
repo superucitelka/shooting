@@ -1,5 +1,13 @@
 /* Konstanty odkazující na formulářové elementy */
+const targetGap = document.getElementById('targetGap');
+const targetCircles = document.getElementById('targetCircles');
+const crossShift = document.getElementById('crossShift');
+const crossSensitivity = document.getElementById('crossSensitivity');
+const maxShots = document.getElementById('maxShots');
+const start = document.getElementById('start');
+
 /* Konstanta odkazující na výsledkovou část stránky */
+const results = document.getElementById('results');
 
 /*******************************************************************************************/
 /* Konstanta odkazující na element plátna */
@@ -115,6 +123,11 @@ let game = {
         start.disabled = true;
         start.getElementsByTagName('span')[0].setAttribute('class', 'spinner-grow spinner-grow-sm');
         // Nastavení parametrů hry, terče a kříže podle hodnot zadaných do formuláře 
+        this.maxShots = parseInt(maxShots.value);
+        target.circles = parseInt(targetCircles.value);
+        target.gap = parseInt(targetGap.value);        
+        cross.shift = parseInt(crossShift.value);
+        cross.sensitivity = parseInt(crossSensitivity.value);
         // Inicializace kříže - nastavení na počíteční souřadnice
         cross.init();
         // Vytvoření nového hráče (zadání jména) a jeho uložení jako aktivního hráče
