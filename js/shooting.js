@@ -79,13 +79,36 @@ cross.paint();
 
 /*******************************************************************************************/
 /* Player - objekt hráče */
+function Player(name) {
     /* Atributy objektu */
     /* name - jméno hráče */
+    this.name = name,
     /* shots - pole s hodnotami jednotlivých ran */
+    this.shots = [],
 
     /* Metody objektu */
     /* sum() - součet všech ran */
+    this.sum = function() {
+        let suma = 0;
+        this.shots.forEach((shot) => {
+            suma += shot.result;
+        })
+        console.log()
+        return suma.toFixed(1);
+    }, 
+
     /* avg() - průměr všech ran */
+    this.avg = function() {
+        return (this.sum() / this.shots.length).toFixed(2);
+    } 
+}
+
+// Test objektu Player
+let myplayer = new Player(prompt('Zadej jméno hráče: '));
+myplayer.shots.push(5.8);
+myplayer.shots.push(8);
+myplayer.shots.push(7);
+console.log(myplayer);
 
 /*******************************************************************************************/
 /* Objekt hry - střelecké soutěže */
