@@ -32,23 +32,50 @@ let target = {
     }
 }
 
-/* Test objektu target */
-target.circles = 5;
-target.gap = 30;
-target.paint();
-
-
 /*******************************************************************************************/
 /* cross - objekt záměrného kříže */
+let cross = {
     /* Atributy objektu */
     /* x, y - souřadnice středu kříže */
+    x: canvas.width / 2,
+    y: canvas.width / 2,
     /* shift - maximální rychlost pohybu kříže */
+    shift: 10,
     /* sensitivity - citlivost ovládání kříže z klávesnice */
+    sensitivity: 3,   
 
     /* Metody objektu */
     /* init() - inicializace kříže do počáteční polohy */
+    init: function() {
+        this.x = canvas.width / 2;
+        this.y = canvas.width / 2 + 150;
+    },
+
     /* shake() - simulace roztřesení ruky - náhodný pohyb kříže */
+    shake: function() {
+        this.x += Math.round(Math.random() * 2 * this.shift) - this.shift;
+        this.y += Math.round(Math.random() * 2 * this.shift) - this.shift;     
+    },
+
     /* paint() - vykreslení kříže na plátno */
+    paint: function() {
+        ctx.beginPath();
+        ctx.strokeStyle = 'red';
+        ctx.moveTo(this.x-10, this.y);
+        ctx.lineTo(this.x+10, this.y);
+        ctx.moveTo(this.x, this.y-10);
+        ctx.lineTo(this.x, this.y+10);
+        ctx.stroke();
+    }
+}
+
+// Test objektů target a cross
+target.paint();
+cross.init();
+cross.shift = 50;
+cross.shake();
+console.log(cross);
+cross.paint();
 
 /*******************************************************************************************/
 /* Player - objekt hráče */
