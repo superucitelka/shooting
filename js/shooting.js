@@ -112,6 +112,8 @@ let game = {
     /* play() - spuštění hry */
     play: function() {
         // Deaktivace tlačítka Nová hra
+        start.disabled = true;
+        start.getElementsByTagName('span')[0].setAttribute('class', 'spinner-grow spinner-grow-sm');
         // Nastavení parametrů hry, terče a kříže podle hodnot zadaných do formuláře 
         // Inicializace kříže - nastavení na počíteční souřadnice
         cross.init();
@@ -129,12 +131,22 @@ let game = {
     /* stop() - zastavení hry */
     stop: function() {
         // Zastavení a vynulování časovače
+        clearInterval(this.timer);
+        this.timer = null;
         // Vyčištění plátna
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         // Vypsání celkových výsledků aktivního hráče
+        ctx.font = '20px Arial';
+        ctx.fillStyle = 'blue';
+        ctx.fillText(`${this.activePlayer.name}: ${this.activePlayer.sum()} bodů (průměr ${this.activePlayer.avg()}) `, 100, canvas.height / 2);
         // Přidání záznamu (objektu) aktivního hráče do pole všech hráčů
+        this.players.push(this.activePlayer);
         // Vynulování objektu aktivního hráče
+        this.activePlayer = null;
         // Vypsání výsledkové listiny
         // Aktivace tlačítka Nová hra
+        start.disabled = false;        
+        start.getElementsByTagName('span')[0].setAttribute('class', 'spinner-border spinner-border-sm');
     },    
 
     /* repaint() - překreslení celého plátna */
@@ -206,5 +218,7 @@ document.addEventListener('keydown', function(event){
 
 /*******************************************************************************************/
 /* Ošetření události kliknutí na tlačítko Nová hra */
+start.addEventListener('click', () => {
     // Spuštění hry
     game.play();
+});
