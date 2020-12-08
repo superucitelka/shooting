@@ -148,8 +148,20 @@ let game = {
         // Vykreslení kříže
         cross.paint();
         // Vypsání průběžných výsledků aktivního hráče:
+        ctx.font = '16px Arial';
+        ctx.fillStyle = 'red';
         // * výpis jména hráče
+        ctx.fillText(this.activePlayer.name, 10, 20);
+        var y = 40;
+        ctx.strokeStyle = 'rgba(0, 50, 0, 0.8)';
         // * výpis všech dosud zaznamenaných ran
+        this.activePlayer.shots.forEach((shot) => {
+            ctx.beginPath();
+            ctx.arc(shot.x, shot.y, 10, 0, 2 * Math.PI);
+            y += 20;
+            ctx.fillText(shot.result.toFixed(1), 10, y);
+            ctx.stroke();
+        });        
     },
 
     /* resultList() - vypsání výsledků */
