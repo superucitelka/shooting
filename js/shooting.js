@@ -9,12 +9,34 @@ const ctx = canvas.getContext('2d');
 
 /*******************************************************************************************/
 /* target - objekt terče */
+let target = {
     /* Atributy objektu */
     /* circles - počet kruhů */
+    circles: 10,
     /* gap - mezera mezi kruhy */
+    gap: 20,    
 
     /* Metody objektu */
     /* paint() - metoda pro vykreslení terče na plátno */
+    paint: function(){
+        ctx.strokeStyle = 'black';
+        ctx.font = '10px Arial';
+        ctx.fillStyle = 'blue';
+        for (var i = 1; i <= this.circles; i++) {
+            ctx.beginPath();
+            var r = (this.circles - i) * this.gap + this.gap;
+            ctx.arc(canvas.width / 2, canvas.height / 2, r , 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.fillText(i, canvas.width / 2 + r - 15, canvas.height / 2 + 5);
+        }
+    }
+}
+
+/* Test objektu target */
+target.circles = 5;
+target.gap = 30;
+target.paint();
+
 
 /*******************************************************************************************/
 /* cross - objekt záměrného kříže */
