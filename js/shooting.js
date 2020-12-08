@@ -144,6 +144,7 @@ let game = {
         // Vynulování objektu aktivního hráče
         this.activePlayer = null;
         // Vypsání výsledkové listiny
+        this.resultList();
         // Aktivace tlačítka Nová hra
         start.disabled = false;        
         start.getElementsByTagName('span')[0].setAttribute('class', 'spinner-border spinner-border-sm');
@@ -179,7 +180,14 @@ let game = {
     /* resultList() - vypsání výsledků */
     resultList: function() {    
         // Seřazení hráčů podle součtů všech ran do výsledkové listiny - list 
+        let list = this.players.sort(function(a, b) { return b.sum() - a.sum() });
         // Vymazání bloku s výsledky a vypsání výsledkové listiny
+        results.innerHTML = '';
+        list.forEach((obj) => {
+            let item = document.createElement('li');
+            item.innerHTML = `<b>${obj.name}</b> <code>${obj.sum()}</code> bodů, průměr: <mark>${obj.avg()}</mark> bodů, <kbd>${obj.shots.length}</kbd> ran`;
+            results.append(item);
+        })
     }    
 }
 
