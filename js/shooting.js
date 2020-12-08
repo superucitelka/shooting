@@ -69,14 +69,6 @@ let cross = {
     }
 }
 
-// Test objektů target a cross
-target.paint();
-cross.init();
-cross.shift = 50;
-cross.shake();
-console.log(cross);
-cross.paint();
-
 /*******************************************************************************************/
 /* Player - objekt hráče */
 function Player(name) {
@@ -103,32 +95,39 @@ function Player(name) {
     } 
 }
 
-// Test objektu Player
-let myplayer = new Player(prompt('Zadej jméno hráče: '));
-myplayer.shots.push(5.8);
-myplayer.shots.push(8);
-myplayer.shots.push(7);
-console.log(myplayer);
-
 /*******************************************************************************************/
 /* Objekt hry - střelecké soutěže */
+let game = {
     /* Atributy objektu */
     /* players - pole s uloženými hráči */
+    players: [],
     /* maxShots - maximální počet ran */
+    maxShots: 10,
     /* activePlayer - pro uložení objektu aktivního hráče */
+    activePlayer: null, 
     /* timer - nastavení časovače */
+    timer: null,
 
     /* Metody objektu */
     /* play() - spuštění hry */
+    play: function() {
         // Deaktivace tlačítka Nová hra
         // Nastavení parametrů hry, terče a kříže podle hodnot zadaných do formuláře 
         // Inicializace kříže - nastavení na počíteční souřadnice
+        cross.init();
         // Vytvoření nového hráče (zadání jména) a jeho uložení jako aktivního hráče
+        this.activePlayer = new Player(prompt('Zadej jméno hráče'));
         // Spuštění časovače:
+        this.timer = setInterval(() => {
             // * pravidelné překreslování plátna
+            this.repaint();
             // * kontrola ukončení hry - hráč dosáhne maximálního počtu ran
+            if (this.activePlayer.shots.length >= this.maxShots) this.stop();
+        }, 20);
+    },
 
     /* stop() - zastavení hry */
+    stop: function() {
         // Zastavení a vynulování časovače
         // Vyčištění plátna
         // Vypsání celkových výsledků aktivního hráče
@@ -136,19 +135,29 @@ console.log(myplayer);
         // Vynulování objektu aktivního hráče
         // Vypsání výsledkové listiny
         // Aktivace tlačítka Nová hra
+    },    
 
     /* repaint() - překreslení celého plátna */
+    repaint: function() {
         // Vyčištění plátna
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         // Vykreslení terče
+        target.paint();
         // "Roztřesení" (náhodný přesun) záměrného kříže
+        cross.shake();
         // Vykreslení kříže
+        cross.paint();
         // Vypsání průběžných výsledků aktivního hráče:
         // * výpis jména hráče
         // * výpis všech dosud zaznamenaných ran
+    },
 
     /* resultList() - vypsání výsledků */
+    resultList: function() {    
         // Seřazení hráčů podle součtů všech ran do výsledkové listiny - list 
         // Vymazání bloku s výsledky a vypsání výsledkové listiny
+    }    
+}
 
 /*******************************************************************************************/
 /* Ošetření události stisknutí klávesy v okně stránky */
@@ -163,3 +172,4 @@ console.log(myplayer);
 /*******************************************************************************************/
 /* Ošetření události kliknutí na tlačítko Nová hra */
     // Spuštění hry
+    game.play();
